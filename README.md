@@ -1,4 +1,4 @@
-# chew.inte
+# chew
 
 文字片段分享平台
 
