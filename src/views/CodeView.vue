@@ -2,7 +2,7 @@
   <div class="bg-violet-500">
     <div class="container my-5 px-9 py-5">
       <div class="max-w-sm rounded overflow-hidden shadow-lg px-3 py-5 bg-white">
-        你所黏上的片段網址：
+        <h4 class="font-semibold text-slate-900">片段網址：</h4>
         <span class="
             rounded-full
             bg-slate-100
@@ -51,7 +51,7 @@ export default {
         return "Unknown";
       }
       const baseUrl = process.env.VUE_APP_INTE_HOST;
-      return `${baseUrl}/${this.result._id}`;
+      return `${baseUrl}/#/r/${this.result._id}`;
     },
     code() {
       return this.result?._id || "Unknown"
