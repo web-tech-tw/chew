@@ -76,10 +76,9 @@ export default {
       this.$router.push("/writer");
     },
     async handleSubmit() {
-      const form = new URLSearchParams();
-      form.set("content", this.content);
-      form.set("doc_type", "javascript");
-      const xhr = await this.$axios.post("/anonymous", form);
+      const xhr = await this.$axios.post("/gum", {
+        content: this.content,
+      });
       this.$router.push({
         name: "code",
         params: {

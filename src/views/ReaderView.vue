@@ -222,7 +222,7 @@ export default {
   created() {
     // Fetch data
     this.$axios
-      .get(`/anonymous/${this.code}`)
+      .get(`/gum/${this.code}`)
       .then((response) => {
         this.gum = response.data;
       })
