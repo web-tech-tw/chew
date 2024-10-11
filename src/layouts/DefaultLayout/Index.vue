@@ -6,12 +6,7 @@
   </div>
 </template>
 
-<script>
-import AppHeader from "./Header"
-import AppFooter from "./Footer"
-
-export default {
-  name: 'LayoutIndex',
-  components: {AppHeader, AppFooter},
-}
+<script setup>
+import AppHeader from "../../components/AppHeader.vue"
+import AppFooter from "../../components/AppFooter.vue"
 </script>

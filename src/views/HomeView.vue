@@ -1,18 +1,6 @@
 <template>
   <div>
-    <div
-      class="
-        mt-10
-        mx-auto
-        py-10
-        max-w-7xl
-        px-4
-        sm:mt-12 sm:px-6
-        md:mt-16
-        lg:mt-20 lg:px-8
-        xl:mt-28
-      "
-    >
+    <div class="mt-10 mx-auto py-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
       <div class="sm:text-center lg:text-left">
         <h1 class="text-4xl tracking-tight font-extrabold text-gray-900">
           <span class="block xl:inline">想要</span>
@@ -25,46 +13,16 @@
         <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
           <div class="mt-3 sm:mt-0 sm:ml-3">
             <button
-              class="
-                w-full
-                flex
-                items-center
-                justify-center
-                px-8
-                py-3
-                border border-transparent
-                text-base
-                font-medium
-                rounded-md
-                text-violet-700
-                bg-violet-100
-                hover:bg-violet-200
-                md:py-4 md:text-lg md:px-10
-              "
-              @click="goWriter"
-            >
+              class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
+              @click="onPressGoWriter">
               開始打字
             </button>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="mt-10 h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500"
-    ></div>
-    <div
-      class="
-        mt-10
-        mx-auto
-        py-10
-        max-w-7xl
-        px-4
-        sm:mt-12 sm:px-6
-        md:mt-16
-        lg:mt-20 lg:px-8
-        xl:mt-28
-      "
-    >
+    <div class="mt-10 h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+    <div class="mt-10 mx-auto py-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
       <div class="sm:text-center lg:text-right">
         <h1 class="text-4xl tracking-tight font-extrabold text-gray-900">
           <span class="block xl:inline">你</span>
@@ -77,51 +35,16 @@
         <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-end">
           <div class="rounded-md shadow mr-1">
             <input
-              class="
-                w-full
-                flex
-                items-center
-                justify-center
-                px-8
-                py-3
-                border border-transparent
-                text-base
-                font-medium
-                rounded-md
-                text-black
-                bg-white
-                hover:bg-gray-100
-                my-2
-                sm:my-0
-                md:py-4 md:text-lg md:px-10
-              "
-              type="text"
-              placeholder="0code-xxxx"
-              v-model="code"
-              @keydown.enter="goReader"
-            />
+              class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-black bg-white hover:bg-gray-100 my-2 sm:my-0 md:py-4 md:text-lg md:px-10"
+              type="text" placeholder="0code-xxxx" v-model="code" @keydown.enter="onPressGoReader" />
           </div>
           <div class="rounded-md shadow">
             <button
-              class="
-                w-full
-                flex
-                items-center
-                justify-center
-                px-8
-                py-3
-                border border-transparent
-                text-base
-                font-medium
-                rounded-md
-                text-white
-                bg-violet-600
-                hover:bg-violet-700
-                md:py-4 md:text-lg md:px-10
-              "
-              @click="goReader"
-            >
-              查詢
+              class="w-full h-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 md:py-4 md:text-lg md:px-10"
+              @click="onPressGoReader">
+              <img v-show="isLoading" class="inline mr-3 w-4 h-4 text-white animate-spin" alt="Loading"
+                :src="LoadingCircle" />
+              <span v-show="!isLoading">查詢</span>
             </button>
           </div>
         </div>
@@ -130,22 +53,28 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "HomeView",
-  data: () => ({
-    code: "",
-  }),
-  methods: {
-    goWriter() {
-      this.$router.push("/writer");
-    },
-    goReader() {
-      if (!this.code) {
-        return;
-      }
-      this.$router.push(`/r/${this.code}`);
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+import LoadingCircle from "../assets/LoadingCircle.svg";
+
+const router = useRouter();
+
+const isLoading = ref(false);
+const code = ref("");
+
+function onPressGoWriter() {
+  router.push("/writer");
+}
+
+function onPressGoReader() {
+  if (!code.value) {
+    return;
+  }
+  setTimeout(() => {
+    router.push(`/r/${code.value}`);
+  }, 300);
+  isLoading.value = true;
+}
 </script>
