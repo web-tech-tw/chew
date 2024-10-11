@@ -1,20 +1,14 @@
 <template>
   <div>
     <div v-if="!isLoaded">
-      <svg class="animate-spin mx-auto my-10 h-5 w-5 text-violet-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-        viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-        </path>
-      </svg>
+      <img alt="loading" class="mx-auto my-24 w-8 h-8 text-white animate-spin" :src="LoadingCircle" />
     </div>
     <div v-else-if="!isNotFound">
       <div class="container mx-auto my-5 p-5">
         <div class="mx-auto max-w-sm rounded overflow-hidden shadow-lg">
           <div class="px-6 py-4">
             <div v-if="isCodeMode">
-              <prism-editor class="code-editor" v-model="content" ref="codeEditor" :highlight="highlighter"
+              <prism-editor class="code-editor" v-model="content" :highlight="highlighter" :readonly="true"
                 line-numbers></prism-editor>
             </div>
             <p v-else class="text-gray-700 text-base">
@@ -60,6 +54,8 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue";
 
+import LoadingCircle from "../assets/LoadingCircle.svg";
+
 import dayjs from "dayjs";
 
 import { useClient } from "../clients/chew";
@@ -77,8 +73,6 @@ import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
 const client = useClient();
 
 const gumData = reactive({});
-
-const codeEditor = ref(null);
 
 const isLoaded = ref(false);
 const isNotFound = ref(false);
@@ -135,15 +129,6 @@ onMounted(async () => {
     console.log(e);
   } finally {
     isLoaded.value = true;
-  }
-  // Disable edit mode
-  if (isCodeMode.value && codeEditor.value) {
-    const editorTextarea = codeEditor.value?.$el?.children[1]?.children[0];
-    if (editorTextarea) {
-      editorTextarea.setAttribute("disabled", true);
-    } else {
-      console.error("codeEditor is not found.");
-    }
   }
 });
 </script>

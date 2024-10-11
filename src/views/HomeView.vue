@@ -42,7 +42,8 @@
             <button
               class="w-full h-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 md:py-4 md:text-lg md:px-10"
               @click="onPressGoReader">
-              <img v-show="isLoading" class="inline mr-3 w-4 h-4 text-white animate-spin" :src="LoadingCircle" />
+              <img v-show="isLoading" class="inline mr-3 w-4 h-4 text-white animate-spin" alt="Loading"
+                :src="LoadingCircle" />
               <span v-show="!isLoading">查詢</span>
             </button>
           </div>
