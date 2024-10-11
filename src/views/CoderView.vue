@@ -13,6 +13,10 @@
           @click="onPressGoWriter">
           <document-text-icon class="h-6 w-6"></document-text-icon>
         </button>
+        <button class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" title="清空內容"
+          @click="onPressReset">
+          <trash-icon class="h-6 w-6"></trash-icon>
+        </button>
         <button class="bg-amber-900 hover:bg-amber-800 text-white font-normal py-2 px-4 mx-1" title="我打完了"
           @click="onSubmit">
           <check-icon class="h-6 w-6"></check-icon>
@@ -24,12 +28,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 
 import {
   DocumentTextIcon,
   CodeBracketIcon,
   CheckIcon,
+  TrashIcon,
 } from "@heroicons/vue/24/solid"
 
 import { useRouter } from "vue-router";
@@ -58,10 +63,23 @@ function highlighter(code) {
   return highlight(code, languages.js); // languages.<insert language> to return html with markup
 }
 
+watch(content, () => {
+  if (content.value) {
+    window.onbeforeunload = () => true;
+  } else {
+    window.onbeforeunload = null;
+  }
+  sessionStorage.setItem(
+    "chew-content",
+    content.value,
+  );
+});
+
 function onPressGoHome() {
   if (content.value && !confirm("確定要離開？")) {
     return;
   }
+  sessionStorage.removeItem("chew-content");
   router.push("/");
 }
 
@@ -70,6 +88,10 @@ function onPressGoWriter() {
     return;
   }
   router.replace("/writer");
+}
+
+function onPressReset() {
+  content.value = "";
 }
 
 async function onSubmit() {
@@ -88,6 +110,7 @@ async function onSubmit() {
       }
     }).
     json();
+  sessionStorage.removeItem("chew-content");
   router.replace(`/result/${data._id}`);
 }
 
@@ -95,6 +118,10 @@ onMounted(() => {
   if (isShowCoder.value) {
     router.replace("/writer");
     return;
+  }
+  const savedContent = sessionStorage.getItem("chew-content");
+  if (savedContent) {
+    content.value = savedContent;
   }
 });
 </script>

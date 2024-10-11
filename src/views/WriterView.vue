@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
 import { useClient } from "../clients/chew";
@@ -31,6 +31,18 @@ const content = ref("");
 
 const isShowCoder = computed(() => {
   return window.innerWidth < 768;
+});
+
+watch(content, () => {
+  if (content.value) {
+    window.onbeforeunload = () => true;
+  } else {
+    window.onbeforeunload = null;
+  }
+  sessionStorage.setItem(
+    "chew-content",
+    content.value,
+  );
 });
 
 function onPressGoCoder() {
@@ -56,6 +68,14 @@ async function onSubmit() {
       }
     }).
     json();
+  sessionStorage.removeItem("chew-content");
   router.replace(`/result/${data._id}`);
 }
+
+onMounted(() => {
+  const savedContent = sessionStorage.getItem("chew-content");
+  if (savedContent) {
+    content.value = savedContent;
+  }
+});
 </script>
