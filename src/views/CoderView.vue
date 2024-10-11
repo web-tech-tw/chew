@@ -1,23 +1,36 @@
 <template>
   <div>
-    <prism-editor class="code-editor" v-model="content" :highlight="highlighter" line-numbers></prism-editor>
-    <div class="operations w-32 bg-gray-500 h-full">
-      <button
-        class="w-full flex items-center justify-center px-2 py-2 border border-transparent text-base font-medium text-gray-100 bg-gray-700 hover:bg-gray-600"
-        @click="onSubmit">
-        我打完了
+    <div class="w-full bg-slate-900 px-5 py-3 flex justify-between">
+      <button class="bg-slate-900 flex hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" @click="onPressGoHome">
+        <CodeBracketIcon class="h-6 w-6"></CodeBracketIcon>
+        <span class="ml-3">Code Chew 專業口香糖</span>
       </button>
-      <button
-        class="w-full flex items-center justify-center px-2 py-2 border border-transparent text-base font-medium text-gray-700 bg-gray-100 hover:bg-gray-200"
-        @click="onPressGoWriter">
-        一般模式
-      </button>
+      <div class="flex">
+        <div class="text-white font-normal py-2 px-4 mx-1">
+          模式：JavaScript
+        </div>
+        <button class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" title="一般模式"
+          @click="onPressGoWriter">
+          <document-text-icon class="h-6 w-6"></document-text-icon>
+        </button>
+        <button class="bg-amber-900 hover:bg-amber-800 text-white font-normal py-2 px-4 mx-1" title="我打完了"
+          @click="onSubmit">
+          <check-icon class="h-6 w-6"></check-icon>
+        </button>
+      </div>
     </div>
+    <prism-editor class="code-editor" v-model="content" :highlight="highlighter" line-numbers></prism-editor>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+
+import {
+  DocumentTextIcon,
+  CodeBracketIcon,
+  CheckIcon,
+} from "@heroicons/vue/24/solid"
 
 import { useRouter } from "vue-router";
 import { useClient } from "../clients/chew";
@@ -37,39 +50,60 @@ const client = useClient();
 
 const content = ref("");
 
+const isShowCoder = computed(() => {
+  return window.innerWidth < 768;
+});
+
 function highlighter(code) {
   return highlight(code, languages.js); // languages.<insert language> to return html with markup
 }
 
+function onPressGoHome() {
+  if (content.value && !confirm("確定要離開？")) {
+    return;
+  }
+  router.push("/");
+}
+
 function onPressGoWriter() {
+  if (content.value && !confirm("確定要離開？")) {
+    return;
+  }
   router.replace("/writer");
 }
 
 async function onSubmit() {
   if (!content.value) {
+    alert("請輸入內容");
+    return;
+  }
+  if (!confirm("確定要送出？")) {
     return;
   }
   const data = await client.
     post("gum", {
       json: {
+        type: "javascript",
         content: content.value,
       }
     }).
     json();
-  router.push({
-    path: "result",
-    params: {
-      ...data,
-    },
-  });
+  router.replace(`/result/${data._id}`);
 }
+
+onMounted(() => {
+  if (isShowCoder.value) {
+    router.replace("/writer");
+    return;
+  }
+});
 </script>
 
 <style>
 /* required class */
 .code-editor {
   position: absolute;
-  top: 0;
+  top: 64px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -88,12 +122,5 @@ async function onSubmit() {
 /* optional class for removing the outline */
 .prism-editor__textarea:focus {
   outline: none;
-}
-
-.operations {
-  min-width: 100px;
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 </style>

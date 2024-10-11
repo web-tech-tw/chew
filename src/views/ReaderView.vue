@@ -33,7 +33,7 @@
     <div v-else>
       <div class="mt-10 mx-auto py-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
         <div class="sm:text-center lg:text-left">
-          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+          <h1 class="text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
             <span class="block xl:inline">😯 ㄨㄚˊ</span><br />
             <span class="block xl:inline">你想找的</span>
             <span class="block text-violet-600 xl:inline">文字片段</span>
@@ -43,13 +43,6 @@
             您所請求的資源不見了，或者是從來沒有存在過。
           </p>
           <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-            <div class="rounded-md shadow">
-              <button v-if="$router.history.length"
-                class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 md:py-4 md:text-lg md:px-10"
-                @click="$router.back">
-                返回上一頁
-              </button>
-            </div>
             <div class="mt-3 sm:mt-0 sm:ml-3">
               <router-link
                 class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
@@ -64,7 +57,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, reactive, computed, onMounted } from "vue";
 
 import dayjs from "dayjs";
@@ -102,7 +95,7 @@ const content = computed(() => {
 });
 
 const isCodeMode = computed(() => {
-  return gumData.doc_type !== "plaintext";
+  return gumData.type && gumData.type !== "plain";
 });
 
 const gumTimes = computed(() => {
@@ -134,9 +127,9 @@ onMounted(async () => {
   // Fetch data
   try {
     const data = await client.
-      get(`/gum/${props.gumId}`).
+      get(`gum/${props.gumId}`).
       json();
-    Object.assign(gum, data);
+    Object.assign(gumData, data);
   } catch (e) {
     isNotFound.value = true;
     console.log(e);
@@ -144,8 +137,8 @@ onMounted(async () => {
     isLoaded.value = true;
   }
   // Disable edit mode
-  if (isCodeMode.value) {
-    const editorTextarea = codeEditor?.$el?.children[1]?.children[0];
+  if (isCodeMode.value && codeEditor.value) {
+    const editorTextarea = codeEditor.value?.$el?.children[1]?.children[0];
     if (editorTextarea) {
       editorTextarea.setAttribute("disabled", true);
     } else {

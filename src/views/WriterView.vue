@@ -11,7 +11,7 @@
       </button>
       <button
         class="w-full mt-3 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
-        @click="onPressGoCoder">
+        v-show="!isShowCoder" @click="onPressGoCoder">
         你是工程師嗎？這裡是專業 Coding 模式
       </button>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import { useRouter } from "vue-router";
 import { useClient } from "../clients/chew";
@@ -29,26 +29,33 @@ const client = useClient();
 
 const content = ref("");
 
+const isShowCoder = computed(() => {
+  return window.innerWidth < 768;
+});
+
 function onPressGoCoder() {
+  if (content.value && !confirm("確定要離開？")) {
+    return;
+  }
   router.replace("/coder");
 }
 
 async function onSubmit() {
   if (!content.value) {
+    alert("請輸入內容");
+    return;
+  }
+  if (!confirm("確定要送出？")) {
     return;
   }
   const data = await client.
     post("gum", {
       json: {
+        type: "plain",
         content: content.value,
       }
     }).
     json();
-  router.push({
-    path: "result",
-    params: {
-      ...data,
-    },
-  });
+  router.replace(`/result/${data._id}`);
 }
 </script>
