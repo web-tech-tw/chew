@@ -5,7 +5,7 @@
         片段網址
       </h4>
       <p class="font-normal text-slate-900 text-sm">
-        將片段代碼傳送給你的朋友，讓他們利用代碼查詢這份的文字片段。
+        將片段網址傳送給你的朋友，讓他們透過網址檢閱這份的文字片段。
       </p>
       <input class="w-full my-5 rounded-full bg-slate-100 px-2 py-1 text-md font-semibold text-slate-700" type="text"
         :value="url" />
