@@ -70,8 +70,6 @@ import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
 
-const client = useClient();
-
 const gumData = reactive({});
 
 const isLoaded = ref(false);
@@ -120,6 +118,7 @@ function getTimeTitle(key) {
 onMounted(async () => {
   // Fetch data
   try {
+    const client = useClient();
     const data = await client.
       get(`gum/${props.gumId}`).
       json();

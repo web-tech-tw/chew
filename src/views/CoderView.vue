@@ -51,7 +51,6 @@ import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
 
 const router = useRouter();
-const client = useClient();
 
 const content = ref("");
 
@@ -102,6 +101,7 @@ async function onSubmit() {
   if (!confirm("確定要送出？")) {
     return;
   }
+  const client = useClient();
   const data = await client.
     post("gum", {
       json: {

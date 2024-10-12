@@ -25,7 +25,6 @@ import { useRouter } from "vue-router";
 import { useClient } from "../clients/chew";
 
 const router = useRouter();
-const client = useClient();
 
 const textarea = ref(null);
 
@@ -63,6 +62,7 @@ async function onSubmit() {
   if (!confirm("確定要送出？")) {
     return;
   }
+  const client = useClient();
   const data = await client.
     post("gum", {
       json: {
