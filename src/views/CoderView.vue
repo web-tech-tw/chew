@@ -105,7 +105,7 @@ async function onSubmit() {
   const data = await client.
     post("gum", {
       json: {
-        type: "javascript",
+        type: "js",
         content: content.value,
       }
     }).
