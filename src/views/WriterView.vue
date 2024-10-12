@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto my-5 p-5">
-    <textarea
+    <textarea ref="textarea"
       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
       v-model="content"></textarea>
     <div>
@@ -26,6 +26,8 @@ import { useClient } from "../clients/chew";
 
 const router = useRouter();
 const client = useClient();
+
+const textarea = ref(null);
 
 const content = ref("");
 
@@ -53,6 +55,7 @@ function onClickGoCoder() {
 }
 
 async function onSubmit() {
+  textarea.value.blur();
   if (!content.value) {
     alert("請輸入內容");
     return;
