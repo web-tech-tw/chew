@@ -2,6 +2,7 @@ import ky from "ky"
 
 const {
     VITE_CHEW_RECV_HOST: baseUrl,
+    VITE_SARA_TOKEN_NAME: tokenName,
 } = import.meta.env;
 
 const useSaraToken = (request) => {
