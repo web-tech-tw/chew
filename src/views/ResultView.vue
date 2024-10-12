@@ -21,6 +21,11 @@
         :value="props.gumId" />
     </div>
     <button
+      class="w-full mt-3 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-100 bg-violet-700 hover:bg-violet-600 md:py-4 md:text-lg md:px-10"
+      @click="onClickCopy">
+      {{ copyText }}
+    </button>
+    <button
       class="w-full mt-3 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
       @click="onClickSwitch">
       {{ switchText }}
@@ -43,9 +48,30 @@ const props = defineProps({
 });
 
 const isShowUrl = ref(true);
+const copyMessage = ref('');
 
 const url = computed(() => `${chewInteHost}/#/r/${props.gumId}`);
+const copyTarget = computed(() => isShowUrl.value ? url.value : props.gumId);
+const copyText = computed(() => copyMessage.value || (isShowUrl.value ? '複製網址' : '複製代碼'));
 const switchText = computed(() => isShowUrl.value ? '顯示片段代碼' : '顯示片段網址');
+
+function onClickCopy() {
+  if (!navigator.clipboard) {
+    alert('您的瀏覽器不支援複製功能，請手動複製');
+    return
+  }
+  navigator.clipboard
+    .writeText(copyTarget.value)
+    .then(() => {
+      copyMessage.value = '已複製';
+      setTimeout(() => {
+        copyMessage.value = '';
+      }, 3000);
+    })
+    .catch(() => {
+      alert('複製失敗，請手動複製');
+    });
+}
 
 function onClickSwitch() {
   isShowUrl.value = !isShowUrl.value;
