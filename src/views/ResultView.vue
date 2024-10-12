@@ -22,7 +22,7 @@
     </div>
     <button
       class="w-full mt-3 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
-      @click="onPressSwitch">
+      @click="onClickSwitch">
       {{ switchText }}
     </button>
   </div>
@@ -47,7 +47,7 @@ const isShowUrl = ref(true);
 const url = computed(() => `${chewInteHost}/#/r/${props.gumId}`);
 const switchText = computed(() => isShowUrl.value ? '顯示片段代碼' : '顯示片段網址');
 
-function onPressSwitch() {
+function onClickSwitch() {
   isShowUrl.value = !isShowUrl.value;
 }
 </script>

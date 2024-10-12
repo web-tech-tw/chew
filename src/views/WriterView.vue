@@ -11,7 +11,7 @@
       </button>
       <button
         class="w-full mt-3 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
-        v-show="!isShowCoder" @click="onPressGoCoder">
+        v-show="!isShowCoder" @click="onClickGoCoder">
         你是工程師嗎？這裡是專業 Coding 模式
       </button>
     </div>
@@ -45,7 +45,7 @@ watch(content, () => {
   );
 });
 
-function onPressGoCoder() {
+function onClickGoCoder() {
   if (content.value && !confirm("確定要離開？")) {
     return;
   }

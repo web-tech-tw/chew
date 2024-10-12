@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-full bg-slate-900 px-5 py-3 flex justify-between">
-      <button class="bg-slate-900 flex hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" @click="onPressGoHome">
+      <button class="bg-slate-900 flex hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" @click="onClickGoHome">
         <CodeBracketIcon class="h-6 w-6"></CodeBracketIcon>
         <span class="ml-3">Code Chew 專業口香糖</span>
       </button>
@@ -10,11 +10,11 @@
           模式：JavaScript
         </div>
         <button class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" title="一般模式"
-          @click="onPressGoWriter">
+          @click="onClickGoWriter">
           <document-text-icon class="h-6 w-6"></document-text-icon>
         </button>
         <button class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" title="清空內容"
-          @click="onPressReset">
+          @click="onClickReset">
           <trash-icon class="h-6 w-6"></trash-icon>
         </button>
         <button class="bg-amber-900 hover:bg-amber-800 text-white font-normal py-2 px-4 mx-1" title="我打完了"
@@ -75,7 +75,7 @@ watch(content, () => {
   );
 });
 
-function onPressGoHome() {
+function onClickGoHome() {
   if (content.value && !confirm("確定要離開？")) {
     return;
   }
@@ -83,14 +83,14 @@ function onPressGoHome() {
   router.push("/");
 }
 
-function onPressGoWriter() {
+function onClickGoWriter() {
   if (content.value && !confirm("確定要離開？")) {
     return;
   }
   router.replace("/writer");
 }
 
-function onPressReset() {
+function onClickReset() {
   content.value = "";
 }
 
