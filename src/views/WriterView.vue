@@ -64,7 +64,7 @@ async function onSubmit() {
   }
   const client = useClient();
   const data = await client.
-    post("gum", {
+    post("gums", {
       json: {
         type: "plain",
         content: content.value,

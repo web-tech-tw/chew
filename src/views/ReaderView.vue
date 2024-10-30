@@ -120,7 +120,7 @@ onMounted(async () => {
   try {
     const client = useClient();
     const data = await client.
-      get(`gum/${props.gumId}`).
+      get(`gums/${props.gumId}`).
       json();
     Object.assign(gumData, data);
   } catch (e) {
