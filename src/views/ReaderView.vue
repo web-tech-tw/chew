@@ -92,11 +92,11 @@ const isCodeMode = computed(() => {
 
 const gumTimes = computed(() => {
   const humanReadableFormater = (time) => {
-    return dayjs(time * 1000).format("YYYY-MM-DD HH:mm:ss");
+    return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
   };
   return {
-    created_at: humanReadableFormater(gumData.created_at),
-    updated_at: humanReadableFormater(gumData.updated_at),
+    createdAt: humanReadableFormater(gumData.createdAt),
+    updatedAt: humanReadableFormater(gumData.updatedAt),
   };
 });
 
@@ -106,9 +106,9 @@ function highlighter(code) {
 
 function getTimeTitle(key) {
   switch (key) {
-    case "created_at":
+    case "createdAt":
       return "建立時間";
-    case "updated_at":
+    case "updatedAt":
       return "更新時間";
     default:
       return key;
