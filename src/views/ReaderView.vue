@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!isLoaded">
-      <img alt="loading" class="mx-auto my-24 w-8 h-8 text-white animate-spin" :src="LoadingCircle" />
+      <loading-circle-icon class="inline mr-3 w-4 h-4 text-white animate-spin" />
     </div>
     <div v-else-if="!isNotFound">
       <div class="container mx-auto my-5 p-5">
@@ -54,7 +54,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue";
 
-import LoadingCircle from "../assets/LoadingCircle.svg";
+import LoadingCircleIcon from "../components/LoadingCircleIcon.vue";
 
 import dayjs from "dayjs";
 

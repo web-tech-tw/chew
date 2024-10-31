@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 const {
   VITE_CHEW_INTE_HOST: chewInteHost,
@@ -48,28 +48,28 @@ const props = defineProps({
 });
 
 const isShowUrl = ref(true);
-const copyMessage = ref('');
+const copyMessage = ref("");
 
 const url = computed(() => `${chewInteHost}/#/r/${props.gumId}`);
 const copyTarget = computed(() => isShowUrl.value ? url.value : props.gumId);
-const copyText = computed(() => copyMessage.value || (isShowUrl.value ? '複製網址' : '複製代碼'));
-const switchText = computed(() => isShowUrl.value ? '顯示片段代碼' : '顯示片段網址');
+const copyText = computed(() => copyMessage.value || (isShowUrl.value ? "複製網址" : "複製代碼"));
+const switchText = computed(() => isShowUrl.value ? "顯示片段代碼" : "顯示片段網址");
 
 function onClickCopy() {
   if (!navigator.clipboard) {
-    alert('您的瀏覽器不支援複製功能，請手動複製');
+    alert("您的瀏覽器不支援複製功能，請手動複製");
     return
   }
   navigator.clipboard
     .writeText(copyTarget.value)
     .then(() => {
-      copyMessage.value = '已複製';
+      copyMessage.value = "已複製";
       setTimeout(() => {
-        copyMessage.value = '';
+        copyMessage.value = "";
       }, 3000);
     })
     .catch(() => {
-      alert('複製失敗，請手動複製');
+      alert("複製失敗，請手動複製");
     });
 }
 

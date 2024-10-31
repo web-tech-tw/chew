@@ -14,8 +14,8 @@ const routes = [
         component: () => import("../views/WriterView.vue"),
       },
       {
-        path: '/result/:gumId',
-        component: () => import('../views/ResultView.vue'),
+        path: "/result/:gumId",
+        component: () => import("../views/ResultView.vue"),
         props: true,
       },
     ]

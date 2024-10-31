@@ -42,8 +42,7 @@
             <button
               class="w-full h-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 md:py-4 md:text-lg md:px-10"
               @click="onClickGoReader">
-              <img v-show="isLoading" class="inline mr-3 w-4 h-4 text-white animate-spin" alt="Loading"
-                :src="LoadingCircle" />
+              <loading-circle-icon v-show="isLoading" class="inline mr-3 w-4 h-4 text-white animate-spin" />
               <span v-show="!isLoading">查詢</span>
             </button>
           </div>
@@ -57,7 +56,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-import LoadingCircle from "../assets/LoadingCircle.svg";
+import LoadingCircleIcon from "../components/LoadingCircleIcon.vue";
 
 const router = useRouter();
 
