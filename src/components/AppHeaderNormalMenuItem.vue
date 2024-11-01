@@ -1,10 +1,13 @@
 <template>
   <button
     aria-expanded="false"
-    class="text-base font-medium text-gray-500 hover:text-gray-900"
+    class="h-8 text-gray-500 bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
     type="button"
   >
-    {{ props.name }}
+    <slot name="prepend" />
+    <span class="text-base font-medium">
+      {{ props.name }}
+    </span>
   </button>
 </template>
 

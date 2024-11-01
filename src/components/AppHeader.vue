@@ -7,7 +7,7 @@
             <h1 class="flex-auto text-lg font-semibold text-gray-900">
               {{ title }}
             </h1>
-            <p class="flex-auto text-sm font-normal text-gray-500">
+            <p class="flex-auto text-md font-normal text-gray-500">
               {{ subtitle }}
             </p>
           </router-link>
@@ -16,7 +16,7 @@
         <app-header-mobile-icon-button
           v-if="isMenuItemExist"
           class="-mr-2 -my-2 md:hidden"
-          @click="handleMobileMenuBtnOpenClick"
+          @click="onClickMobileMenuBtnOpen"
         >
           <bars4-icon class="h-6 w-6" />
         </app-header-mobile-icon-button>
@@ -24,15 +24,15 @@
     </div>
     <app-header-mobile
       v-show="isMobileMenuOpened"
-      @close="handleMobileMenuBtnCloseClick"
+      @close="onClickMobileMenuBtnClose"
     />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, provide } from "vue";
+import { ref, onMounted, onUnmounted, provide } from "vue";
 
-import { Bars4Icon } from "@heroicons/vue/24/solid"
+import { Bars4Icon } from "@heroicons/vue/24/outline"
 
 import {
   title,
@@ -51,31 +51,29 @@ const isMobileMenuOpened = ref(false);
 const parentMenuState = ref(true);
 provide("parent-menu-state", parentMenuState);
 
-const isMenuItemExist = computed(() => {
-  return isSaraEnabled || menuItems.length;
-});
+const isMenuItemExist = isSaraEnabled || menuItems.length;
 
-const handleMobileMenuBtnOpenClick = () => {
+const onClickMobileMenuBtnOpen = () => {
   isMobileMenuOpened.value = true;
   parentMenuState.value = true;
 }
 
-const handleMobileMenuBtnCloseClick = () => {
+const onClickMobileMenuBtnClose = () => {
   isMobileMenuOpened.value = false;
   parentMenuState.value = false;
 }
 
-const handleDocumentClick = (e) => {
+const onDocumentClick = (e) => {
   if (!document.querySelector(".app-header").contains(e.target)) {
     parentMenuState.value = false;
   }
 };
 
 onMounted(() => {
-  document.addEventListener("click", handleDocumentClick);
+  document.addEventListener("click", onDocumentClick);
 });
 
 onUnmounted(() => {
-  document.removeEventListener("click", handleDocumentClick);
+  document.removeEventListener("click", onDocumentClick);
 });
 </script>

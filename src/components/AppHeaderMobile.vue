@@ -4,7 +4,7 @@
       <div class="pt-5 pb-6 px-5">
         <div
           class="flex items-center justify-between"
-          @click="handleMobileMenuCloseClick"
+          @click="onClickMobileMenuClose"
         >
           <div>
             <h1 class="flex-auto text-lg font-semibold text-gray-900 sm:hidden">
@@ -36,7 +36,7 @@
                 v-else
                 :name="item.name"
                 :icon="item.icon"
-                @click="handleItemClick(item)"
+                @click="onClickItem(item)"
               />
             </div>
             <app-header-mobile-menu-sara v-if="isSaraEnabled" />
@@ -50,7 +50,7 @@
 <script setup>
 import { inject, watch } from "vue";
 
-import { XMarkIcon } from "@heroicons/vue/24/solid"
+import { XMarkIcon } from "@heroicons/vue/24/outline"
 
 import AppHeaderMobileMenuItem from "./AppHeaderMobileMenuItem.vue"
 import AppHeaderMobileMenuDropdown from "./AppHeaderMobileMenuDropdown.vue"
@@ -64,18 +64,18 @@ import {
 
 const emit = defineEmits(["close"]);
 
-const parentMenuState = inject("parent-menu-state")
+const parentMenuState = inject("parent-menu-state");
 watch(parentMenuState, (value) => {
   if (!value) {
     emit("close");
   }
 });
 
-const handleMobileMenuCloseClick = () => {
+const onClickMobileMenuClose = () => {
   emit("close");
 }
 
-const handleItemClick = (item) => {
+const onClickItem = (item) => {
   parentMenuState.value = false;
   item.onClick();
 }

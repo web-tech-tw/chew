@@ -1,13 +1,12 @@
 <template>
-  <component
-    :is="iconInstance"
+  <img
+    :alt="props.name"
+    :src="resource"
     v-bind="props"
-  />
+  >
 </template>
 
 <script setup>
-import * as allIcons from "@heroicons/vue/24/outline";
-
 const props = defineProps({
   name: {
     type: String,
@@ -20,5 +19,6 @@ const props = defineProps({
   },
 });
 
-const iconInstance = allIcons[props.name];
+const allIcons = {};
+const resource = allIcons[props.name];
 </script>
