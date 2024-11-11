@@ -3,7 +3,7 @@ import {createRouter, createWebHashHistory} from "vue-router";
 const routes = [
   {
     path: "/",
-    component: () => import("../layouts/DefaultLayout/Index.vue"),
+    component: () => import("../layouts/DefaultLayout.vue"),
     children: [
       {
         path: "",
@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: "/r",
-    component: () => import("../layouts/DefaultLayout/Index.vue"),
+    component: () => import("../layouts/DefaultLayout.vue"),
     children: [
       {
         path: ":gumId",
