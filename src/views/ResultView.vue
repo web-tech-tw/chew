@@ -13,6 +13,7 @@
       <input
         class="w-full my-5 rounded-full bg-slate-100 px-2 py-1 text-md font-semibold text-slate-700"
         type="text"
+        readonly
         :value="url"
       >
     </div>
@@ -29,6 +30,7 @@
       <input
         class="w-full my-5 rounded-full bg-slate-100 px-2 py-1 text-md font-semibold text-slate-700"
         type="text"
+        readonly
         :value="props.gumId"
       >
     </div>
