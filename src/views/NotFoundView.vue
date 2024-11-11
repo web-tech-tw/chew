@@ -12,7 +12,8 @@
         <div class="mt-3 sm:mt-0 sm:ml-3">
           <router-link
             class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
-            to="/">
+            to="/"
+          >
             回首頁
           </router-link>
         </div>

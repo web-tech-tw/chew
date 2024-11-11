@@ -1,7 +1,7 @@
 <template>
   <footer class="mt-16 pb-16 text-sm leading-6">
     <div class="max-w-7xl mx-auto mt-11 divide-y divide-gray-200 px-4 sm:px-6 md:px-8">
-      「Chew 口香糖」是一個文字片段分享平台。 
+      「Chew 口香糖」是一個文字片段分享平台。
     </div>
     <div class="max-w-7xl mx-auto mt-5 divide-y divide-gray-200 px-4 sm:px-6 md:px-8 text-sky-700">
       <a

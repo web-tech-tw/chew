@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 
 const routes = [
   {
@@ -18,7 +18,7 @@ const routes = [
         component: () => import("../views/ResultView.vue"),
         props: true,
       },
-    ]
+    ],
   },
   {
     path: "/coder",
@@ -33,12 +33,12 @@ const routes = [
         component: () => import("../views/ReaderView.vue"),
         props: true,
       },
-    ]
+    ],
   },
 ];
 
 const router = createRouter({
-  scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior: () => ({top: 0}),
   history: createWebHashHistory(),
   routes,
 });

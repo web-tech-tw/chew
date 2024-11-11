@@ -8,16 +8,27 @@
         <div class="mx-auto max-w-sm rounded overflow-hidden shadow-lg">
           <div class="px-6 py-4">
             <div v-if="isCodeMode">
-              <prism-editor class="code-editor" v-model="content" :highlight="highlighter" :readonly="true"
-                line-numbers></prism-editor>
+              <prism-editor
+                v-model="content"
+                class="code-editor"
+                :highlight="highlighter"
+                :readonly="true"
+                line-numbers
+              />
             </div>
-            <p v-else class="text-gray-700 text-base">
+            <p
+              v-else
+              class="text-gray-700 text-base"
+            >
               {{ content }}
             </p>
           </div>
           <div class="px-6 pt-4 pb-2">
-            <span v-for="(time, key) in gumTimes" :key="key"
-              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            <span
+              v-for="(time, key) in gumTimes"
+              :key="key"
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+            >
               {{ getTimeTitle(key) }}：{{ time }}
             </span>
           </div>
@@ -28,7 +39,7 @@
       <div class="mt-10 mx-auto py-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
         <div class="sm:text-center lg:text-left">
           <h1 class="text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
-            <span class="block xl:inline">😯 ㄨㄚˊ</span><br />
+            <span class="block xl:inline">😯 ㄨㄚˊ</span><br>
             <span class="block xl:inline">你想找的</span>
             <span class="block text-violet-600 xl:inline">文字片段</span>
             <span class="block xl:inline">不存在</span>
@@ -40,7 +51,8 @@
             <div class="mt-3 sm:mt-0 sm:ml-3">
               <router-link
                 class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-violet-700 bg-violet-100 hover:bg-violet-200 md:py-4 md:text-lg md:px-10"
-                to="/">
+                to="/"
+              >
                 回首頁
               </router-link>
             </div>
@@ -52,20 +64,20 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from "vue";
+import {ref, reactive, computed, onMounted} from "vue";
 
 import LoadingCircleIcon from "../components/LoadingCircleIcon.vue";
 
 import dayjs from "dayjs";
 
-import { useClient } from "../clients/chew";
+import {useClient} from "../clients/chew";
 
 // import Prism Editor
-import { PrismEditor } from "vue-prism-editor";
+import {PrismEditor} from "vue-prism-editor";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
 // import highlighting library (you can use any library you want just return html string)
-import { highlight, languages } from "prismjs/components/prism-core";
+import {highlight, languages} from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
@@ -100,20 +112,20 @@ const gumTimes = computed(() => {
   };
 });
 
-function highlighter(code) {
+const highlighter = (code) => {
   return highlight(code, languages.js); // languages.<insert language> to return html with markup
-}
+};
 
-function getTimeTitle(key) {
+const getTimeTitle = (key) => {
   switch (key) {
-    case "createdAt":
-      return "建立時間";
-    case "updatedAt":
-      return "更新時間";
-    default:
-      return key;
+  case "createdAt":
+    return "建立時間";
+  case "updatedAt":
+    return "更新時間";
+  default:
+    return key;
   }
-}
+};
 
 onMounted(async () => {
   // Fetch data

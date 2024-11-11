@@ -1,51 +1,68 @@
 <template>
   <div>
     <div class="w-full bg-slate-900 px-5 py-3 flex justify-between">
-      <button class="bg-slate-900 flex hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" @click="onClickGoHome">
-        <CodeBracketIcon class="h-6 w-6"></CodeBracketIcon>
+      <button
+        class="bg-slate-900 flex hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1"
+        @click="onClickGoHome"
+      >
+        <CodeBracketIcon class="h-6 w-6" />
         <span class="ml-3">Code Chew 專業口香糖</span>
       </button>
       <div class="flex">
         <div class="text-white font-normal py-2 px-4 mx-1">
           模式：JavaScript
         </div>
-        <button class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" title="一般模式"
-          @click="onClickGoWriter">
-          <document-text-icon class="h-6 w-6"></document-text-icon>
+        <button
+          class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1"
+          title="一般模式"
+          @click="onClickGoWriter"
+        >
+          <document-text-icon class="h-6 w-6" />
         </button>
-        <button class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1" title="清空內容"
-          @click="onClickReset">
-          <trash-icon class="h-6 w-6"></trash-icon>
+        <button
+          class="bg-slate-900 hover:bg-slate-800 text-white font-normal py-2 px-4 mx-1"
+          title="清空內容"
+          @click="onClickReset"
+        >
+          <trash-icon class="h-6 w-6" />
         </button>
-        <button class="bg-amber-900 hover:bg-amber-800 text-white font-normal py-2 px-4 mx-1" title="我打完了"
-          @click="onSubmit">
-          <check-icon class="h-6 w-6"></check-icon>
+        <button
+          class="bg-amber-900 hover:bg-amber-800 text-white font-normal py-2 px-4 mx-1"
+          title="我打完了"
+          @click="onSubmit"
+        >
+          <check-icon class="h-6 w-6" />
         </button>
       </div>
     </div>
-    <prism-editor class="code-editor" v-model="content" :highlight="highlighter" line-numbers></prism-editor>
+    <prism-editor
+      v-model="content"
+      class="code-editor"
+      :highlight="highlighter"
+      line-numbers
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import {ref, watch, computed, onMounted} from "vue";
 
 import {
   DocumentTextIcon,
   CodeBracketIcon,
   CheckIcon,
   TrashIcon,
-} from "@heroicons/vue/24/solid"
+} from "@heroicons/vue/24/solid";
 
-import { useRouter } from "vue-router";
-import { useClient } from "../clients/chew";
+import {useRouter} from "vue-router";
+import {useClient} from "../clients/chew";
 
 // import Prism Editor
-import { PrismEditor } from "vue-prism-editor";
+import {PrismEditor} from "vue-prism-editor";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
 // import highlighting library (you can use any library you want just return html string)
-import { highlight, languages } from "prismjs/components/prism-core";
+import {highlight, languages} from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
@@ -58,9 +75,9 @@ const isShowCoder = computed(() => {
   return window.innerWidth < 768;
 });
 
-function highlighter(code) {
+const highlighter = (code) => {
   return highlight(code, languages.js); // languages.<insert language> to return html with markup
-}
+};
 
 watch(content, () => {
   if (content.value) {
@@ -74,26 +91,26 @@ watch(content, () => {
   );
 });
 
-function onClickGoHome() {
+const onClickGoHome = () => {
   if (content.value && !confirm("確定要離開？")) {
     return;
   }
   sessionStorage.removeItem("chew-content");
   router.push("/");
-}
+};
 
-function onClickGoWriter() {
+const onClickGoWriter = () => {
   if (content.value && !confirm("確定要離開？")) {
     return;
   }
   router.replace("/writer");
-}
+};
 
-function onClickReset() {
+const onClickReset = () => {
   content.value = "";
-}
+};
 
-async function onSubmit() {
+const onSubmit = async () => {
   if (!content.value) {
     alert("請輸入內容");
     return;
@@ -107,12 +124,12 @@ async function onSubmit() {
       json: {
         type: "js",
         content: content.value,
-      }
+      },
     }).
     json();
   sessionStorage.removeItem("chew-content");
   router.replace(`/result/${data._id}`);
-}
+};
 
 onMounted(() => {
   if (isShowCoder.value) {
